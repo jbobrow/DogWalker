@@ -142,6 +142,7 @@ The following is a summary of the JSON data that we will be using. The JSON is o
 ```
 </details>
 
+The Bash script should find the values for the location and the crowd-sourced location and add them to the CSV... the script below is a total hack, that needs to be updated to use `jq` to properly parse the JSON. Instead, this script uses `grep` and takes the 20 lines before finding the name of the AirTag and then searches that for lat and lon also using `grep`. It is likely not returning the value we want since this JSON file has objects in a random order everytime I open the file.
 
 > [!IMPORTANT]
 > 
