@@ -149,24 +149,31 @@ The Bash script should find the values for the location and the crowd-sourced lo
 > ### Bash Script
 > ```
 > #!/bin/bash
+> 
+> # This is a bash script that saves Ernie's Airtag info to a CSV
+> 
 > # Define file paths
-> csv_file="/Users/<username>/Documents/AirtagHistory/Airtag-Ernie.csv"
-> items_data="/System/Volumes/Data/Users/<username>/Library/Caches/com.apple.findmy.fmipcore/Items.data"
->
+> csv_file="/Users/username/Documents/AirtagHistory/Airtag-Ernie.csv"
+> items_data="/System/Volumes/Data/Users/username/Library/Caches/com.apple.findmy.fmipcore/Items.data"
+> jq_path="/opt/homebrew/bin/jq"  # Path to jq
+> 
 > # Check if the file exists, if not, add header
 > if [ ! -f "$csv_file" ]; then
 >  echo "Date,Latitude,Longitude,TimeStamp" > "$csv_file"
 > fi
->
-> # Extract latitude and append to the CSV file
-> latitude=$(grep -F -B20 Ernie "$copy_items_data" | grep latitude | awk -F '[:,]' '{print $2}' | tr -d '[:space:]')
-> echo -n "$(date),$latitude," >> "$csv_file"
->
-> # Extract longitude and append to the CSV file
-> longitude=$(grep -F -B20 Ernie "$copy_items_data" | grep longitude | awk -F '[:,]' '{print $2}' | tr -d '[:space:]')
-> echo "$longitude," >> "$csv_file"
->
-> # Extract timestamp and append to the CSV file
-> timeStamp=$(grep -F -B20 Ernie "$copy_items_data" | grep timeStamp | awk -F '[:,]' '{print $2}' | tr -d '[:space:]')
-> echo "$timeStamp" >> "$csv_file"
+> 
+> # Use jq to filter items with the name "Ernie"
+> item=$("$jq_path" -c '.[] | select(.name == "Ernie")' $items_data)
+> 
+> # Extract information using jq and append to the CSV file
+> echo -n "$(date),$(
+>   echo "$item" | "$jq_path" -r '.location.latitude'
+> ),$(
+>   echo "$item" | "$jq_path" -r '.location.longitude'
+> ),$(
+>   echo "$item" | "$jq_path" -r '.location.timeStamp'
+> )" >> "$csv_file"
+> 
+> # Add a new line to the CSV file
+> echo "" >> "$csv_file"
 > ```
