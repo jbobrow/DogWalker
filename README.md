@@ -32,38 +32,8 @@ The following is a summary of the JSON data that we will be using. The JSON is o
     - longitude 
 
 <details>
-  <summary><h4>Complete JSON Summary</h4></summary>
+<summary><h3>Example JSON</h3></summary>
   
-  #### AirTag Object
-  - ~~address~~
-  - ~~batteryStatus~~
-  - ~~capabilities~~
-  - __crowdSourcedLocation *__
-    - timeStamp *
-    - latitude *
-    - longitude * 
-  - ~~GroupID~~
-  - ~~identifier~~
-  - ~~isAppleAudioAccessory~~
-  - ~~isFirmwareUpdateMandatory~~
-  - __location *__
-    - timeStamp *
-    - latitude *
-    - longitude * 
-  - ~~lostModeMetadata~~
-  - __name *__ 
-  - ~~owner~~
-  - ~~partInfo~~
-  - ~~productIdentifier~~
-  - ~~ProductType~~
-  - ~~Role~~
-  - ~~safeLocations~~
-  - ~~serialNumber~~
-  - ~~SystemVersion~~
-</details>
-
-
-### Example JSON
 ```
 [{
     "batteryStatus" : 1,
@@ -170,6 +140,7 @@ The following is a summary of the JSON data that we will be using. The JSON is o
 .
 {AirTag Object n}]
 ```
+</details>
 
 
 > [!IMPORTANT]
