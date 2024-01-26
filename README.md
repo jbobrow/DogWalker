@@ -153,23 +153,17 @@ The Bash script now finds the values for the location (TODO: add the crowd-sourc
 > ```
 > #!/bin/bash
 > 
-> # This is a bash script that saves Ernie's Airtag info to a CSV
+> csv_file="/Users/jonathanbobrow/Documents/AirtagHistory/Airtag-Ernie.csv"
+> items_data="/System/Volumes/Data/Users/jonathanbobrow/Library/Caches/com.apple.findmy.fmipcore/Items.data"
+> jq_path="/opt/homebrew/bin/jq"
 > 
-> # Define file paths
-> csv_file="/Users/username/Documents/AirtagHistory/Airtag-Ernie.csv"
-> items_data="/System/Volumes/Data/Users/username/Library/Caches/com.apple.findmy.fmipcore/Items.data"
-> jq_path="/opt/homebrew/bin/jq"  # Path to jq
-> 
-> # Check if the file exists, if not, add header
 > if [ ! -f "$csv_file" ]; then
 >  echo "Date,Latitude,Longitude,TimeStamp" > "$csv_file"
 > fi
 > 
-> # Use jq to filter items with the name "Ernie"
 > item=$("$jq_path" -c '.[] | select(.name == "Ernie")' $items_data)
 > 
-> # Extract information using jq and append to the CSV file
-> echo -n "$(date),$(
+> echo "$(date),$(
 >   echo "$item" | "$jq_path" -r '.location.latitude'
 > ),$(
 >   echo "$item" | "$jq_path" -r '.location.longitude'
@@ -177,6 +171,11 @@ The Bash script now finds the values for the location (TODO: add the crowd-sourc
 >   echo "$item" | "$jq_path" -r '.location.timeStamp'
 > )" >> "$csv_file"
 > 
-> # Add a new line to the CSV file
-> echo "" >> "$csv_file"
+> echo "$(date),$(
+>   echo "$item" | "$jq_path" -r '.crowdSourcedLocation.latitude'
+> ),$(
+>   echo "$item" | "$jq_path" -r '.crowdSourcedLocation.longitude'
+> ),$(
+>   echo "$item" | "$jq_path" -r '.crowdSourcedLocation.timeStamp'
+> )" >> "$csv_file"
 > ```
