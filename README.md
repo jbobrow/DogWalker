@@ -153,8 +153,8 @@ The Bash script now finds the values for the location (TODO: add the crowd-sourc
 > ```
 > #!/bin/bash
 > 
-> csv_file="/Users/jonathanbobrow/Documents/AirtagHistory/Airtag-Ernie.csv"
-> items_data="/System/Volumes/Data/Users/jonathanbobrow/Library/Caches/com.apple.findmy.fmipcore/Items.data"
+> csv_file="/Users/<username>/Documents/AirtagHistory/Airtag-Ernie.csv"
+> items_data="/System/Volumes/Data/Users/<username>/Library/Caches/com.apple.findmy.fmipcore/Items.data"
 > jq_path="/opt/homebrew/bin/jq"
 > 
 > if [ ! -f "$csv_file" ]; then
